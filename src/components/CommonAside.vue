@@ -25,7 +25,7 @@
         <span slot="title">{{ item.label }}</span>
       </template>
       <el-menu-item-group v-for="(subItem, subIndex) in item.children" :key="subItem.path">
-        <el-menu-item :index="subIndex.toString()">{{ subItem.label }}</el-menu-item>
+        <el-menu-item @click="clickMenu(subItem)" :index="subIndex.toString()">{{ subItem.label }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
@@ -62,14 +62,14 @@ export default {
           icon: 'location',
           children: [
             {
-              path: '/pagh1',
+              path: '/page1',
               name: 'page1',
               label: '頁面1',
               icon: 'setting',
               url: 'Other/PageOne'
             },
             {
-              path: '/pagh2',
+              path: '/page2',
               name: 'page2',
               label: '頁面2',
               icon: 'setting',
@@ -102,6 +102,7 @@ export default {
       this.$router.push({
         name: item.name
       })
+      this.$store.commit('selectMenu', item)
     }
   }
 }

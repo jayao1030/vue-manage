@@ -2,7 +2,14 @@
   <header>
     <div class="left-content">
       <el-button @click="handleMenu" plain icon="el-icon-menu" size="mini"></el-button>
-      <h3 style="color: #ffffff">首頁</h3>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item
+          v-for="item in tags"
+          :key="item.path"
+          :to="{ path: item.path }"
+          class="breadLink"
+        >{{ item.label }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
     <div class="right-content">
       <el-dropdown trigger="click" size="mini">
@@ -19,12 +26,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'CommonHeader',
   data () {
     return {
       userImg: require('../assets/images/user.png')
     }
+  },
+  computed: {
+    ...mapState({
+      tags: state => state.tab.tabsList
+    })
   },
   methods: {
     handleMenu () {
@@ -56,5 +69,12 @@ header {
     height: 40px;
     border-radius: 50%;
   }
+}
+
+.breadLink /deep/ .el-breadcrumb__inner {
+  color: #999;
+}
+.breadLink:last-child /deep/ .el-breadcrumb__inner {
+  color: #fff;
 }
 </style>
